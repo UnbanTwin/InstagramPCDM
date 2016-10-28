@@ -2,16 +2,18 @@
   "name": "InstagramPCDM",
   "version": "1.0.0",
   "description": "",
-  "main": "mai.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "instagram-private-api": "^0.5.0",
-    "underscore": "^1.8.3"
+    "bluebird": "3.4.6",
+    "express": "4.14.0",
+    "instagram-private-api": "0.5.0",
+    "underscore": "1.8.3"
   }
 }

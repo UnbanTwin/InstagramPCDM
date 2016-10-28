@@ -3,26 +3,16 @@ var device = new Client.Device('wizardsambolton');
 var storage = new Client.CookieFileStorage(__dirname + '/cookies/human11404.json');
 var _ = require('underscore');
 var Promise = require('bluebird');
+var account = require("./account.json");
 // And go for login
-Client.Session.create(device, storage, 'wzrdsmbltn', 'Sam66sam')
-.then(function(session) {
 
-	/*var feed = new Client.Feed.Inbox(session, 100);
-	feed.all().then(function(threads) {
-	    if (threads.length > 0)
-	        throw new Error("..... no messeges in inbox ....")
-	    return threads[0].configureText("text to someone")
-	})
-	.then(function(){
-	    console.log("text sended!")
-	})*/
-});
-
+var session = new Client.Session(device, storage);
+var promise = Client.Session.create(device, storage, account.username, account.password);
 function sendDM(user, text) {
 	// Either gain already gained session
-	var session = new Client.Session(device, storage);
+
 	// Or if we cant, create a new session
-	var promise = Client.Session.create(device, storage, 'human11404', '');
+
 
 	promise.then(function(sessionInstance) {
 		// Search for the User
@@ -42,4 +32,10 @@ function sendDM(user, text) {
 }
 
 
-sendDM("wzrdsmbltn","test");
+
+
+
+module.exports = {
+	sendMessage: function(text){sendDM("wzrdsmbltn",text);}
+
+}
