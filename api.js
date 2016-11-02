@@ -8,34 +8,25 @@ var account = require("./account.json");
 
 var session = new Client.Session(device, storage);
 var promise = Client.Session.create(device, storage, account.username, account.password);
-function sendDM(user, text) {
-	// Either gain already gained session
 
-	// Or if we cant, create a new session
-
-
-	promise.then(function(sessionInstance) {
-		// Search for the User
-		Client.Account.searchForUser(session, user)
-		.then(function(accountInstance) {
-			var userId = accountInstance.id;
-
-			// Send a DM
-			Client.Thread.configureText(session, userId, text)
-			.then(function(threads) {
-				var thread = threads[0];
-				//thread.broadcastText(text);
-				console.log(thread.items)
-			});
-		});
-	});
-}
 
 
 
 
 
 module.exports = {
-	sendMessage: function(text){sendDM("wzrdsmbltn",text);}
+	sendMessage: function(user,text,callback) {
+		promise.then(function(sessionInstance) {
+			// Search for the User
+			Client.Account.searchForUser(session, user)
+			.then(function(accountInstance) {
+				var userId = accountInstance.id;
+				Client.Thread.configureText(session, userId, text)
+				.then(function(threads) {
+					callback();
+				});
+			});
+		});
+	}
 
 }
