@@ -12,9 +12,14 @@ app.get('/', function(req, res){
 });
 app.get('/sendMessage', function(req, res){
    API.sendMessage("wzrdsmbltn",req.query.message,function() {
-       res.send("Message sent!")
+       res.send("Message sent!");
    });
+});
 
+app.get('/listFollowing',function(req,res){
+    API.listFollowing(function(data){
+        res.send(data);
+    });
 });
 
 app.listen(port);
