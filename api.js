@@ -50,15 +50,15 @@ function removeSession(item) {
 
 
 module.exports = {
-	sendMessage: function(user,text,callback) {
-		Client.Account.searchForUser(session, user)
-		.then(function(accountInstance) {
-			var userId = accountInstance.id;
-			Client.Thread.configureText(session, userId, text)
-			.then(function(threads) {
-				callback();
-			});
+	sendMessage: function(listOfUsers,text,callback) {
+		//Client.Account.searchForUser(session, user)
+		//.then(function(accountInstance) {
+		//var userId = accountInstance.id;
+		Client.Thread.configureText(session, listOfUsers, text)
+		.then(function(threads) {
+			callback();
 		});
+		//});
 
 	},
 	sendToThread: function(threadId,text,callback) {

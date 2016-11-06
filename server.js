@@ -11,7 +11,11 @@ app.get('/', function(req, res){
   res.send('hello world');
 });
 app.get('/api/send/message', function(req, res){
-   API.sendMessage("wzrdsmbltn",req.query.message,function() {
+    if (req.query.users == undefined) {
+        return res.send("Missing user param")
+    }
+    var users = req.query.users.split(',');
+    API.sendMessage(users,req.query.message,function() {
        res.send("Message sent!");
    });
 });
