@@ -10,14 +10,19 @@ app.use("*",function(req,res,next){
 app.get('/', function(req, res){
   res.send('hello world');
 });
-app.get('/sendMessage', function(req, res){
+app.get('/api/send/message', function(req, res){
    API.sendMessage("wzrdsmbltn",req.query.message,function() {
        res.send("Message sent!");
    });
 });
 
-app.get('/listFollowing',function(req,res){
+app.get('/api/list/following',function(req,res){
     API.listFollowing(function(data){
+        res.send(data);
+    });
+});
+app.get('/api/list/threads',function(req,res){
+    API.listThreads(function(data){
         res.send(data);
     });
 });

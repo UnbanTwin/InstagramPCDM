@@ -10,8 +10,25 @@ var promise = Client.Session.create(device, storage, account.username, account.p
 promise.then(function(sessionInstance) {
 	console.log("Instagram connection established");
 });
+function cleanArray(data){
+	var cleaned = [];
+	for(i in data) {
+		cleaned.push(data[i]._params);
 
+	};
+	return cleaned;
+};
 
+function cleanArrayThreads(data){
+	var cleaned = [];
+	for(i in data) {
+		var item = data[i]._params;
+		delete item.inviter._session;
+		cleaned.push(item);
+
+	};
+	return cleaned;
+};
 
 
 module.exports = {
@@ -27,21 +44,26 @@ module.exports = {
 
 	},
 	listFollowing: function(callback) {
-		console.log(session);
+
 		Client.Account.searchForUser(session,account.username)
 		.then(function(accountInstance) {
 			var feed = new Client.Feed.AccountFollowing(session,accountInstance.id);
 			feed.get().then(function(data) {
-				console.log("Reponse from api: ");
-				console.log(data);
-				var accounts = [];
-				for(i in data) {
-					accounts.push(data[i]._params);
-				};
-				callback(accounts);
-			});
-		})
 
+
+				callback(cleanArray(data));
+			});
+		});
+
+	},
+	listThreads: function(callback){
+		var feed = new Client.Feed.Inbox(session);
+		feed.get().then(function(data){
+			console.log("Reponse from api: ");
+			console.log(data[0]._params);
+			callback(cleanArrayThreads(data));
+
+		});
 	}
 
 }
