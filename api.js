@@ -43,6 +43,13 @@ module.exports = {
 		});
 
 	},
+	sendToThread: function(threadId,text,callback) {
+		Client.Thread.getById(session,threadId)
+		.then(function(thread){
+			thread.broadcastText(text);
+			callback();
+		});
+	},
 	listFollowing: function(callback) {
 
 		Client.Account.searchForUser(session,account.username)

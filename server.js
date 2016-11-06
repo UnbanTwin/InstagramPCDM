@@ -26,6 +26,12 @@ app.get('/api/list/threads',function(req,res){
         res.send(data);
     });
 });
+app.get('/api/send/threads',function(req,res){
+    API.sendToThread("340282366841710300949128113874027408665","Hello World",function(data){
+        res.send(data);
+    });
+});
+
 
 app.listen(port);
 console.log("I'm listening on " + port);
