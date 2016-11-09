@@ -1,0 +1,22 @@
+#left {
+	width:200px;
+	float: left;
+}
+#right {
+	width:600px;
+	float: left;
+	margin-left: 20px;
+}
+.account img {
+	width:25px;
+}
+.account {
+	padding:10px;
+}
+
+.username {
+	font-weight: bold;
+}
+.account:hover {
+	background-color:#eee;
+}

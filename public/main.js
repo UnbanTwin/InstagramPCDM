@@ -4,7 +4,7 @@ function main() {
 		console.log(followers);
 		$.get('/templates/list-following.mu', function(template) {
 			var rendered = Mustache.render(template, {data: followers});
-			$('#target').html(rendered);
+			$('#left').html(rendered);
 		});
 	});
 
