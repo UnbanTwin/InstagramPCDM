@@ -7,12 +7,11 @@ app.use("*",function(req,res,next){
     next();
 });
 
-app.get('/', function(req, res){
-  res.send('hello world');
-});
+app.use(express.static("public"));
+
 app.get('/api/send/message', function(req, res){
     if (req.query.users == undefined) {
-        return res.send("Missing user param")
+        return res.send("Missing user param");
     }
     var users = req.query.users.split(',');
     API.sendMessage(users,req.query.message,function() {

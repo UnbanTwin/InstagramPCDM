@@ -26,7 +26,7 @@ function cleanArray(data){
 		cleaned.push(data[i]._params);
 
 	};
-	console.log(cleaned);
+	//console.log(cleaned);
 	return cleaned;
 };
 
