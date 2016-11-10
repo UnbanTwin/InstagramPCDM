@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var port = 8000;
+var bodyParser = require("body-parser");
 var API = require("./api.js");
 app.use("*",function(req,res,next){
     console.log(req.method + " " + req.originalUrl);
@@ -8,13 +9,15 @@ app.use("*",function(req,res,next){
 });
 
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/api/send/message', function(req, res){
-    if (req.query.users == undefined) {
+app.post('/api/send/message', function(req, res){
+    console.log(req.body);
+    if (req.body.users == undefined) {
         return res.send("Missing user param");
     }
-    var users = req.query.users.split(',');
-    API.sendMessage(users,req.query.message,function() {
+    var users = req.body.users.split(',');
+    API.sendMessage(users,req.body.message,function() {
        res.send("Message sent!");
    });
 });

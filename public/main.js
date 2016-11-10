@@ -7,5 +7,17 @@ function main() {
 			$('#left').html(rendered);
 		});
 	});
+	$("#send-message-form").submit(function(){
+		/*$.get("/api/send/message?message=test111&users=3088383945",function(){
+		console.log("sent!");
+	});*/
+	var message = $("#send-message-form input").val();
+	$.post( "/api/send/message", { users:"3088383945",message:message })
+	.done(function(data) {
+		console.log("It works!");
+	});
+
+	return false;
+});
 
 }
