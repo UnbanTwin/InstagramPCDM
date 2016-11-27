@@ -23,7 +23,10 @@ function cleanArray(data){
 	var cleaned = [];
 	for(i in data) {
 		data[i] = removeSession(data[i]);
-		cleaned.push(data[i]._params);
+		//console.log(data[i]);
+		if(data[i] != null && typeof data[i] != "undefined"){
+			cleaned.push(data[i]._params);
+		}
 
 	};
 	//console.log(cleaned);
@@ -60,6 +63,13 @@ module.exports = {
 		});
 		//});
 
+	},
+	showThread: function(threadId,callback){
+		Client.Thread.getById(session,threadId)
+		.then(function(thread){
+			//console.log(thread.items);
+			callback(cleanArray(thread.items));
+		});
 	},
 	sendToThread: function(threadId,text,callback) {
 		Client.Thread.getById(session,threadId)

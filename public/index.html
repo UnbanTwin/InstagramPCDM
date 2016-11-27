@@ -1,27 +1,38 @@
-<!DOCTYPE html5>
-<html>
+<!DOCTYPE html>
+<html ng-app="pcdm">
 <head>
-	<title>Instagram DM</title>
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	<script src="jquery-3.1.1.min.js"></script>
-	<script src="mustache.js"></script>
-	<script src="main.js"></script>
-
+	<script src="angular.min.js"></script>
+	<script src="angularMain.js"></script>
 </head>
 <body>
 	<div id="left">
-
+		<div ng-controller="friendsList">
+			<div ng-repeat="friend in data">
+				<div class="account" data-id="{{friend.id}}">
+					<img src="{{friend.picture}}"/>
+					<span class="username">{{friend.username}}</span>
+				</div>
+			</div>
+		</div>
+		<p>Threads</p>
+		<div ng-controller="threadsList">
+			<div ng-repeat="thread in data">
+				<div class="account" data-id="{{thread.id}}">
+					<img src="{{thread.inviter._params.picture}}"/>
+					<span class="username">{{thread.title}}</span>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div id="right">
-		<div id="to-users">
-			
-		</div>
-		<form id="send-message-form">
-			<input name="message"></input>
-			<button type="submit">Submit!</button>
-		</form>
+		<p>...</p>
 	</div>
 
-</body>
 
+
+
+
+
+</body>
 </html>
