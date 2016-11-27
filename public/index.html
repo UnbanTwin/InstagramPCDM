@@ -16,17 +16,28 @@
 			</div>
 		</div>
 		<p>Threads</p>
+		<div ng-controller="testCom"><button ng-click="update()">Update</button></div>
 		<div ng-controller="threadsList">
+			<p>the value of x is: {{x}}</p>
 			<div ng-repeat="thread in data">
 				<div class="account" data-id="{{thread.id}}">
 					<img src="{{thread.inviter._params.picture}}"/>
 					<span class="username">{{thread.title}}</span>
+
 				</div>
 			</div>
 		</div>
 	</div>
 	<div id="right">
-		<p>...</p>
+		<div ng-controller="threadView">
+			<div ng-repeat="item in data">
+				<div data-id="{{item.id}}">
+					<!--<img src="{{thread.inviter._params.picture}}"/>-->
+
+					<span>{{item.text}}</span>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
