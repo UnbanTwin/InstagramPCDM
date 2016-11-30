@@ -1,6 +1,6 @@
 var app = angular.module("pcdm",[]);
-app.factory("info",function(){
-	return {x: 5};
+app.service("thread",function(){
+	this.data = {id: "340282366841710300949128113874027408665"};
 });
 app.controller("friendsList",function($scope,$http){
 	$scope.data = [];
@@ -9,30 +9,26 @@ app.controller("friendsList",function($scope,$http){
 	});
 
 });
-app.controller("threadsList",["$scope","$http","info",function($scope,$http,info){
+app.controller("threadsList",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
-
-	$scope.x = info.x;
-	$scope.$watch("info.x", function(){
-		console.log("Threads list updating")
-	});
+	$scope.selectThread = function(id) {
+		console.log(id);
+		thread.data.id = id;
+		$rootScope.$emit("changeThread");
+	};
 	$http.get("/api/list/threads").then(function(res){
-		$scope.data = res.data;
-
-	});
-}]);
-app.controller("threadView",function($scope,$http){
-	$scope.data = [];
-	$http.get("/api/show/thread/340282366841710300949128113874027408665").then(function(res){
 		$scope.data = res.data;
 	});
 });
-app.controller("testCom",["$scope","info",function($scope,info){
+app.controller("threadView",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
-	$scope.update = function() {
-		console.log("Updated x value");
-		info.x++;
-	}
+	function fetchThread() {
+		$http.get("/api/show/thread/" + thread.data.id).then(function(res){
+			$scope.data = res.data;
+		});
+	};
+	fetchThread();
+	$rootScope.$on("changeThread",fetchThread);
+});
 
-}]);
 console.log("Hello World!");
