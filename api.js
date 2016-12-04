@@ -1,3 +1,4 @@
+var async = require('async');
 var Client = require('instagram-private-api').V1;
 var device = new Client.Device('human11404');
 var storage = new Client.CookieFileStorage(__dirname + '/cookies/human11404.json');
@@ -10,6 +11,13 @@ var promise = Client.Session.create(device, storage, account.username, account.p
 promise.then(function(sessionInstance) {
 	console.log("Instagram connection established");
 });
+var cachedUsers = {};
+function clearCache(){
+	cachedUsers = {};
+	setTimeout(clearCache,1000*60*60);
+	console.log("Cleared User Cache");
+};
+clearCache();
 // function cleanArray(data){
 // 	var cleaned = [];
 // 	for(i in data) {
@@ -22,6 +30,7 @@ promise.then(function(sessionInstance) {
 function cleanArray(data){
 	var cleaned = [];
 	for(i in data) {
+
 		data[i] = removeSession(data[i]);
 		//console.log(data[i]);
 		if(data[i] != null && typeof data[i] != "undefined"){
@@ -67,8 +76,14 @@ module.exports = {
 	showThread: function(threadId,callback){
 		Client.Thread.getById(session,threadId)
 		.then(function(thread){
-			//console.log(thread.items);
-			callback(cleanArray(thread.items));
+			getUserObjects(cleanArray(thread.items),function(accounts){
+				var items = cleanArray(thread.items);
+				for(i=0;i<items.length;i++){
+					items[i].account = accounts[items[i].accountId.toString()];
+				}
+				callback(items);
+			});
+
 		});
 	},
 	sendToThread: function(threadId,text,callback) {
@@ -97,6 +112,51 @@ module.exports = {
 			callback(cleanArray(data));
 
 		});
+	},
+	userByID: function (Id,callback) {
+		getUserObject(Id,callback);
 	}
+
+};
+//Get user object from cache OR Instagram API
+function getUserObject(Id,callback) {
+	Id = Id.toString();
+	if(cachedUsers[Id] != undefined) {
+		console.log("User retreived from cache");
+		return callback(cachedUsers[Id]);
+	}else{
+		Client.Account.getById(session,Id)
+		.then(function(data){
+			console.log("User fetched from server");
+			cachedUsers[Id] = data._params;
+			callback(data._params);
+		});
+	}
+};
+//Get unique list of user IDs from thread
+function IdsFromThread(items) {
+	var Ids = [];
+	for(i=0;i<items.length;i++) {
+		if(Ids.indexOf(items[i].accountId) == -1){
+			Ids.push(items[i].accountId);
+		}
+	}
+	return Ids;
+};
+//Given thread items, get all user objects in thread
+function getUserObjects(items,callback){
+	var Ids = IdsFromThread(items);
+	async.map(Ids,function(ID,callback){
+		getUserObject(ID,function(user){
+			callback(null,user);
+		});
+
+	},function(err,data){
+		var accounts = {};
+		for (i=0;i<data.length;i++){
+			accounts[data[i].id] = data[i];
+		}
+		callback(accounts);
+	});
 
 }

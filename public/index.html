@@ -34,10 +34,12 @@
 			<div ng-repeat="item in data">
 				<div data-id="{{item.id}}">
 					<!--<img src="{{thread.inviter._params.picture}}"/>-->
-
-					<span>{{item.text}}</span>
+					<span>{{item.account.username}}: {{item.text}}</span>
 				</div>
 			</div>
+		</div>
+		<div ng-controller="messageInput">
+			<input ng-model="contents"/><button ng-click="send()">Submit!</button>
 		</div>
 	</div>
 

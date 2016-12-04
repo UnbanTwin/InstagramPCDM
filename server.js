@@ -9,8 +9,8 @@ app.use("*",function(req,res,next){
 });
 
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.post('/api/send/message', function(req, res){
     console.log(req.body);
     if (req.body.users == undefined) {
@@ -37,8 +37,14 @@ app.get('/api/show/thread/:id',function(req,res){
         res.send(data);
     });
 });
-app.get('/api/send/threads',function(req,res){
-    API.sendToThread("340282366841710300949128113874027408665","Hello World",function(data){
+app.post('/api/send/threads',function(req,res){
+    console.log(req.body);
+    API.sendToThread(req.body.id,req.body.message,function(data){
+        res.send(data);
+    });
+});
+app.get('/api/show/user/:id',function(req,res){
+    API.userByID(req.params.id,function(data){
         res.send(data);
     });
 });
