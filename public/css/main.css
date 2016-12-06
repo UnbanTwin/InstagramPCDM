@@ -6,6 +6,7 @@
 	width:600px;
 	float: left;
 	margin-left: 20px;
+	font-family: "Arial", Gadget, sans-serif;
 }
 .account img {
 	width:25px;
@@ -19,4 +20,7 @@
 }
 .account:hover {
 	background-color:#eee;
+}
+.message {
+	padding-bottom: 10px;
 }

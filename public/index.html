@@ -34,7 +34,7 @@
 			<div ng-repeat="item in data">
 				<div data-id="{{item.id}}">
 					<!--<img src="{{thread.inviter._params.picture}}"/>-->
-					<span>{{item.account.username}}: {{item.text}}</span>
+					<span><div class="message"><img src="{{item.account.picture}}" height="20px" width="20px"/>{{item.account.username}}: {{item.text}}</div></span>
 				</div>
 			</div>
 		</div>
