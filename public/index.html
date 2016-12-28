@@ -20,7 +20,7 @@
 		<div ng-controller="threadsList">
 
 			<div ng-repeat="thread in data">
-				<div class="account" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
+				<div class="thread" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
 					<img src="{{thread.inviter._params.picture}}"/>
 					<span class="username">{{thread.title}}</span>
 
@@ -30,6 +30,14 @@
 		</div>
 	</div>
 	<div id="right">
+		<div ng-controller="userSelector">
+			<input ng-model="pattern" ng-change="update()"/>
+			<div ng-repeat="friend in data.matches">
+				{{friend.username}}
+			</div>
+		</div>
+		<br>
+		<br>
 		<div ng-controller="threadView">
 			<div ng-repeat="item in data">
 				<div data-id="{{item.id}}">

@@ -9,12 +9,37 @@ app.service("thread",function($rootScope){
 		},x)
 	};
 });
-
-app.controller("friendsList",function($scope,$http){
-	$scope.data = [];
-
+app.service("friends",function($rootScope,$http){
+	this.data = [];
+	var friendsService = this;
 	$http.get("/api/list/following").then(function(res){
-		$scope.data = res.data;
+		friendsService.data = res.data;
+		$rootScope.$emit("reloadFriends");
+
+	});
+
+});
+app.controller("userSelector",function($scope,$rootScope,friends){
+	$scope.data = {};
+	$scope.update = function(){
+		console.log("Update");
+		$scope.data.matches = [];
+		if($scope.pattern == ""){
+			return;
+		};
+		for (i=0;i<friends.data.length;i++){
+			if(friends.data[i].username.indexOf($scope.pattern) != -1) {
+				$scope.data.matches.push(friends.data[i]);
+			};
+		}
+	};
+
+});
+
+app.controller("friendsList",function($scope,$rootScope,friends){
+	$scope.data = friends.data;
+	$rootScope.$on("reloadFriends",function(){
+		$scope.data = friends.data;
 	});
 
 });
@@ -44,7 +69,7 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 
 app.controller("threadView",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
-	
+
 	function fetchThread() {
 		console.log("Fetching thread");
 		$http.get("/api/show/thread/" + thread.data.id).then(function(res){

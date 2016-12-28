@@ -8,17 +8,20 @@
 	margin-left: 20px;
 	font-family: "Arial", Gadget, sans-serif;
 }
-.account img {
+.account img, .thread img {
 	width:25px;
 }
 .account {
 	padding:10px;
+	border-radius: 5px;
+	background-color: #F3F1E2;
+	margin-bottom: 5px;
 }
 
 .username {
 	font-weight: bold;
 }
-.account:hover {
+.thread:hover {
 	background-color:#eee;
 }
 .message {
