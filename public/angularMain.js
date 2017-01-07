@@ -28,8 +28,9 @@ app.controller("new",function($scope,thread) {
 		thread.data.mode = "new";
 	}
 });
-app.controller("newThread",function($scope,$rootScope,friends,thread){
+app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 	$scope.data = {};
+	$scope.contents = "";
 	$scope.data.selected = [];
 	$scope.thread = thread;
 	$scope.update = function(){
@@ -52,6 +53,23 @@ app.controller("newThread",function($scope,$rootScope,friends,thread){
 		}
 		$scope.data.selected.push(user);
 		console.log($scope.data.selected);
+	};
+	$scope.send = function() {
+		var ids = [];
+		for (i in $scope.data.selected) {
+			ids.push($scope.data.selected[i].id);
+		};
+		$http.post("/api/send/message",{users: ids.join(","), message: $scope.contents}).then(function(res){
+			console.log(res);
+			$scope.contents = "";
+			$http.get("/api/list/threads").then(function(res){
+				console.log("firing");
+				console.log(res.data);
+				thread.data.id = res.data[0].id;
+				thread.data.mode = "thread";
+				$rootScope.$emit("changeThread");
+			});
+		});
 	}
 
 });
@@ -64,20 +82,12 @@ app.controller("friendsList",function($scope,$rootScope,friends){
 
 });
 
-app.controller("messageInput",function($scope,$http,thread,$rootScope){
-	$scope.send = function() {
-		$http.post("/api/send/threads",{id: thread.data.id, message: $scope.contents}).then(function(res){
-			thread.reload(2000);
-			$scope.contents = "";
-		});
-	}
-});
 
 app.controller("threadsList",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
 
 	$scope.selectThread = function(id) {
-
+		thread.data.mode = "thread";
 		thread.data.id = id;
 		$rootScope.$emit("changeThread");
 	};
@@ -89,6 +99,12 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 app.controller("threadView",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
 	$scope.thread = thread;
+	$scope.send = function() {
+		$http.post("/api/send/threads",{id: thread.data.id, message: $scope.contents}).then(function(res){
+			thread.reload(2000);
+			$scope.contents = "";
+		});
+	}
 	function fetchThread() {
 		console.log("Fetching thread");
 		$http.get("/api/show/thread/" + thread.data.id).then(function(res){
