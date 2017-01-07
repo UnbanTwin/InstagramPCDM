@@ -7,16 +7,11 @@
 </head>
 <body>
 	<div id="left">
-		<div ng-controller="friendsList">
-			<div ng-repeat="friend in data">
-				<div class="account" data-id="{{friend.id}}">
-					<img src="{{friend.picture}}"/>
-					<span class="username">{{friend.username}}</span>
-				</div>
-			</div>
+		<div ng-controller="new">
+			<button ng-click="triggerNew()">New message!</button>
 		</div>
+		<br>
 		<p>Threads</p>
-
 		<div ng-controller="threadsList">
 
 			<div ng-repeat="thread in data">
@@ -30,15 +25,34 @@
 		</div>
 	</div>
 	<div id="right">
-		<div ng-controller="userSelector">
+		<div ng-controller="newThread" ng-show="thread.data.mode == 'new'">
+			<h2>New message</h2>
+			<button ng-click="thread.data.mode = 'thread'">Cancel</button>
+			<br>
 			<input ng-model="pattern" ng-change="update()"/>
 			<div ng-repeat="friend in data.matches">
-				{{friend.username}}
+
+				<div class="account" data-id="{{friend.id}}" ng-click="selectUser(friend)">
+					<img src="{{friend.picture}}"/>
+					<span class="username">{{friend.username}}</span>
+				</div>
+
+			</div>
+			<h4>Current users</h4>
+			<br>
+			<div ng-repeat="friend in data.selected">
+
+				<div class="account" data-id="{{friend.id}}" >
+					<img src="{{friend.picture}}"/>
+					<span class="username">{{friend.username}}</span>
+				</div>
+
 			</div>
 		</div>
 		<br>
 		<br>
-		<div ng-controller="threadView">
+		<div ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
+			<h2>Thread: </h2>
 			<div ng-repeat="item in data">
 				<div data-id="{{item.id}}">
 					<!--<img src="{{thread.inviter._params.picture}}"/>-->
