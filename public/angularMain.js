@@ -1,4 +1,5 @@
 var app = angular.module("pcdm",[]);
+
 //thread and new
 app.service("thread",function($rootScope){
 	this.data = {
@@ -55,6 +56,7 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 		console.log($scope.data.selected);
 	};
 	$scope.send = function() {
+		$rootScope.$emit("resetPolling");
 		var ids = [];
 		for (i in $scope.data.selected) {
 			ids.push($scope.data.selected[i].id);
@@ -68,6 +70,7 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 				thread.data.id = res.data[0].id;
 				thread.data.mode = "thread";
 				$rootScope.$emit("changeThread");
+				$rootScope.$emit("resetThreadList");
 			});
 		});
 	}
@@ -89,27 +92,48 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 	$scope.selectThread = function(id) {
 		thread.data.mode = "thread";
 		thread.data.id = id;
+		$rootScope.$emit("resetPolling");
+		console.log("Picked new thread");
 		$rootScope.$emit("changeThread");
+
 	};
-	$http.get("/api/list/threads").then(function(res){
-		$scope.data = res.data;
+	$rootScope.$on("resetThreadList",function(){
+		$http.get("/api/list/threads").then(function(res){
+			$scope.data = res.data;
+		});
 	});
+	$rootScope.$emit("resetThreadList");
+
 });
 
 app.controller("threadView",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
 	$scope.thread = thread;
+	var timerID = null;
+	var pollingTime = 1000;
+	$rootScope.$on("resetPolling",function(){
+		console.log("reset timer to 1000");
+		pollingTime = 1000;
+	});
 	$scope.send = function() {
+		$rootScope.$emit("resetPolling");
 		$http.post("/api/send/threads",{id: thread.data.id, message: $scope.contents}).then(function(res){
 			thread.reload(2000);
 			$scope.contents = "";
 		});
-	}
+	};
+
 	function fetchThread() {
 		console.log("Fetching thread");
 		$http.get("/api/show/thread/" + thread.data.id).then(function(res){
 			$scope.data = res.data;
 			$scope.data.reverse();
+			if (timerID){
+				clearTimeout(timerID);
+			}
+			console.log("Auto refreshed after "+ pollingTime);
+			pollingTime += 2000;
+			timerID = setTimeout(fetchThread,pollingTime);
 		});
 	};
 	fetchThread();
