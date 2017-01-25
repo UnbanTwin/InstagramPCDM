@@ -34,6 +34,12 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 	$scope.contents = "";
 	$scope.data.selected = [];
 	$scope.thread = thread;
+	$scope.cancel = function(){
+		thread.data.mode = 'thread'
+		$scope.data.selected = [];
+		$scope.pattern = "";
+		$scope.data.matches = [];
+	};
 	$scope.update = function(){
 		console.log("Update");
 		$scope.data.matches = [];
@@ -54,6 +60,14 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 		}
 		$scope.data.selected.push(user);
 		console.log($scope.data.selected);
+	};
+	$scope.removeUser = function(user) {
+		console.log("Removing user");
+		var index = $scope.data.selected.indexOf(user);
+		if (index != -1){
+			$scope.data.selected.splice(index,1);
+		}
+
 	};
 	$scope.send = function() {
 		$rootScope.$emit("resetPolling");

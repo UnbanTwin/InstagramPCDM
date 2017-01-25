@@ -26,7 +26,7 @@
 	<div id="right">
 		<div ng-controller="newThread" ng-show="thread.data.mode == 'new'">
 			<h2>New message</h2>
-			<button ng-click="thread.data.mode = 'thread'">Cancel</button>
+			<button ng-click="cancel()">Cancel</button>
 			<br>
 			<input ng-model="pattern" ng-change="update()"/>
 			<div ng-repeat="friend in data.matches">
@@ -41,7 +41,8 @@
 			<br>
 			<div ng-repeat="friend in data.selected">
 
-				<div class="account" data-id="{{friend.id}}" >
+				<div class="account" data-id="{{friend.id}}" ng-click="removeUser(friend)">
+
 					<img src="{{friend.picture}}"/>
 					<span class="username">{{friend.username}}</span>
 				</div>
