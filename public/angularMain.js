@@ -3,7 +3,7 @@ var app = angular.module("pcdm",[]);
 //thread and new
 app.service("thread",function($rootScope){
 	this.data = {
-		id: "340282366841710300949128112909932433006",
+		id: "340282366841710300949128113874027408665",
 		mode: "thread"
 	};
 	this.reload = function(x) {
@@ -108,7 +108,7 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 
 });
 
-app.controller("threadView",function($scope,$http,thread,$rootScope){
+app.controller("threadView",function($scope,$http,thread,$rootScope,$anchorScroll){
 	$scope.data = [];
 	$scope.thread = thread;
 
@@ -139,6 +139,10 @@ app.controller("threadView",function($scope,$http,thread,$rootScope){
 			console.log("Auto refreshed after "+ pollingTime);
 			pollingTime += 2000;
 			timerID = setTimeout(fetchThread,pollingTime);
+
+			setTimeout(function(){
+				document.getElementById("chatWindow").scrollTop = document.getElementById("chatWindow").scrollHeight
+			},1);
 		});
 	};
 
