@@ -3,7 +3,7 @@ var app = angular.module("pcdm",[]);
 //thread and new
 app.service("thread",function($rootScope){
 	this.data = {
-		id: "340282366841710300949128113874027408665",
+		id: "340282366841710300949128112909932433006",
 		mode: "thread"
 	};
 	this.reload = function(x) {
@@ -94,11 +94,13 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 		thread.data.id = id;
 		$rootScope.$emit("resetPolling");
 		console.log("Picked new thread");
+
 		$rootScope.$emit("changeThread");
 
 	};
 	$rootScope.$on("resetThreadList",function(){
 		$http.get("/api/list/threads").then(function(res){
+			console.log(res.data);
 			$scope.data = res.data;
 		});
 	});
@@ -109,6 +111,7 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 app.controller("threadView",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
 	$scope.thread = thread;
+
 	var timerID = null;
 	var pollingTime = 1000;
 	$rootScope.$on("resetPolling",function(){
@@ -125,9 +128,11 @@ app.controller("threadView",function($scope,$http,thread,$rootScope){
 
 	function fetchThread() {
 		console.log("Fetching thread");
+		console.log(thread.data);
 		$http.get("/api/show/thread/" + thread.data.id).then(function(res){
 			$scope.data = res.data;
 			$scope.data.reverse();
+			insertDividers($scope.data);
 			if (timerID){
 				clearTimeout(timerID);
 			}
@@ -136,6 +141,18 @@ app.controller("threadView",function($scope,$http,thread,$rootScope){
 			timerID = setTimeout(fetchThread,pollingTime);
 		});
 	};
+
+	function insertDividers (list) {
+		var startId = -1;
+		for(var i =0; i < list.length; i++){
+			var item = list[i];
+			if(item.accountId != startId) {
+				startId = item.accountId;
+				var divider = {type:"divider", account: item.account};
+				list.splice(i,0, divider);
+			}
+		}
+	}
 	fetchThread();
 	$rootScope.$on("changeThread",fetchThread);
 	$rootScope.$on("reloadThread",fetchThread);

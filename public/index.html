@@ -4,6 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<script src="angular.min.js"></script>
 	<script src="angularMain.js"></script>
+	<title>Instagram PCDM</title>
 </head>
 <body>
 	<div id="left">
@@ -15,11 +16,9 @@
 		<div ng-controller="threadsList">
 
 			<div ng-repeat="thread in data">
-				<div class="thread" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
+				<div class="thread-list-item" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
 					<img src="{{thread.inviter._params.picture}}"/>
 					<span class="username">{{thread.title}}</span>
-
-
 				</div>
 			</div>
 		</div>
@@ -50,14 +49,19 @@
 			</div>
 			<input ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
 		</div>
-		<br>
-		<br>
 		<div ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
-			<h2>Thread: </h2>
 			<div ng-repeat="item in data">
-				<div data-id="{{item.id}}">
-					<!--<img src="{{thread.inviter._params.picture}}"/>-->
-					<span><div class="message"><img src="{{item.account.picture}}" height="20px" width="20px"/>{{item.account.username}}: {{item.text}}</div></span>
+				<div>
+					<div ng-if="item.type == 'divider'" class="divider">
+						<img src="{{item.account.picture}}" height="20px" width="20px"/> {{item.account.username}}
+					</div>
+					<div ng-if="item.type =='media'">
+						<a href="{{item.media[0].url}}" target="_blank"><img  class="thread-image"  src="{{item.media[0].url}}"></a>
+					</div>
+					<div class="message" ng-if="item.type =='text'">
+						{{item.text}}
+					</div>
+					<div class="clear"></div>
 				</div>
 			</div>
 			<input ng-model="contents"/><button ng-click="send()">Submit!</button>

@@ -1,16 +1,32 @@
+body {
+		font-family: "Arial", Gadget, sans-serif;
+}
+
 #left {
-	width:200px;
+	width:300px;
 	float: left;
 }
 #right {
 	width:600px;
 	float: left;
-	margin-left: 20px;
-	font-family: "Arial", Gadget, sans-serif;
+	padding-left: 20px;
+	border-left: 1px solid #ddd;
 }
-.account img, .thread img {
+
+
+.thread-list-item {
+
+}
+
+.thread-list-item:hover {
+	background-color:#eee;
+	cursor:pointer;
+}
+
+.thread-list-item img {
 	width:25px;
 }
+
 .account {
 	padding:10px;
 	border-radius: 5px;
@@ -18,12 +34,25 @@
 	margin-bottom: 5px;
 }
 
-.username {
-	font-weight: bold;
+.clear {
+	clear: both;
 }
-.thread:hover {
-	background-color:#eee;
-}
+
 .message {
-	padding-bottom: 10px;
+	margin-bottom: 5px;
+	background:#e8eeff;
+	border-radius: 10px;
+	float:left;
+	padding:10px;
+}
+
+.thread-image {
+	width:300px;
+}
+
+.divider {
+	margin-top:20px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+	font-size: 18px;
 }
