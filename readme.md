@@ -3,7 +3,7 @@ Send Instagram DMs from your pc!
 
 ##Get started
 - Clone this repo
-- Run ```setup.sh```
-- Run ```npm install```
-- Run ```npm start```
+- Run ```npm run setup```
 - You're ready to go
+##Changing the logged in user
+Simply type '''npm run login'''
