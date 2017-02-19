@@ -34,6 +34,7 @@ body {
 .textBox{
 	width:300px !important;
 	display:inline-block!important;
+	margin-right: 1% !important;
 }
 
 
