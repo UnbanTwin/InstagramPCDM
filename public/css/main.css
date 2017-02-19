@@ -1,5 +1,10 @@
 body {
-		font-family: "Arial", Gadget, sans-serif;
+	font-family: "Arial", Gadget, sans-serif;
+	font-size: 14px !important;
+	padding-top: 1%;
+	padding-left: 1%;
+	padding-bottom: 1%;
+	padding-right: 1%;
 }
 
 #left {
@@ -16,11 +21,21 @@ body {
 	height:500px;
 	overflow: scroll;
 }
-
-
+.newMessagePic {
+	width:30px;
+	height:30px;
+}
+.newMessageUsername {
+	font-weight: bolder;
+}
 .thread-list-item {
 
 }
+.textBox{
+	width:300px !important;
+	display:inline-block!important;
+}
+
 
 .thread-list-item:hover {
 	background-color:#eee;

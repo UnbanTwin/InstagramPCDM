@@ -5,16 +5,17 @@
 	<script src="angular.min.js"></script>
 	<script src="angularMain.js"></script>
 	<title>Instagram PCDM</title>
+
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 </head>
 <body>
 	<div id="left">
 		<div ng-controller="new">
-			<button ng-click="triggerNew()">New message!</button>
+			<button ng-click="triggerNew()" class="btn btn-info" ng-hide="showButton == false">New message!</button>
 		</div>
 		<br>
 		<p>Threads</p>
 		<div ng-controller="threadsList">
-
 			<div ng-repeat="thread in data">
 				<div class="thread-list-item" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
 					<img src="{{thread.inviter._params.picture}}"/>
@@ -25,15 +26,16 @@
 	</div>
 	<div id="right">
 		<div ng-controller="newThread" ng-show="thread.data.mode == 'new'">
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 			<h2>New message</h2>
-			<button ng-click="cancel()">Cancel</button>
 			<br>
-			<input ng-model="pattern" ng-change="update()"/>
+			<h4>Add users</h4>
+			<input class="form-control" ng-model="pattern" ng-change="update()"/>
 			<div ng-repeat="friend in data.matches">
 
 				<div class="account" data-id="{{friend.id}}" ng-click="selectUser(friend)">
-					<img src="{{friend.picture}}"/>
-					<span class="username">{{friend.username}}</span>
+					<img class="newMessagePic" src="{{friend.picture}}"/>
+					<span class="newMessageUsername">{{friend.username}}</span>
 				</div>
 
 			</div>
@@ -43,12 +45,12 @@
 
 				<div class="account" data-id="{{friend.id}}" ng-click="removeUser(friend)">
 
-					<img src="{{friend.picture}}"/>
-					<span class="username">{{friend.username}}</span>
+					<img class="newMessagePic" src="{{friend.picture}}"/>
+					<span class="newMessageUsername">{{friend.username}}</span>
 				</div>
 
 			</div>
-			<input ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
+			<input class="form-control textBox" ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
 		</div>
 		<div ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
 			<div id="chatWindow">
@@ -68,7 +70,7 @@
 				</div>
 				<a id="chatBottom"></a>
 			</div>
-			<input ng-model="contents"/><button ng-click="send()">Submit!</button>
+			<input class="form-control textBox" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
 		</div>
 	</div>
 
