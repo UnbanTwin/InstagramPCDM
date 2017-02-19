@@ -110,7 +110,7 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 		thread.data.id = id;
 		$rootScope.$emit("resetPolling");
 		console.log("Picked new thread");
-
+		$rootScope.showButton = true;
 		$rootScope.$emit("changeThread");
 
 	};
