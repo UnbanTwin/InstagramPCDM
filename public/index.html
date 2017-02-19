@@ -2,11 +2,12 @@
 <html ng-app="pcdm">
 <head>
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="jqueryScripts.js"></script>
 	<script src="angular.min.js"></script>
 	<script src="angularMain.js"></script>
 	<title>Instagram PCDM</title>
-
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 </head>
 <body>
 	<div id="left">
@@ -53,7 +54,7 @@
 			<br>
 			<input class="form-control textBox" placeholder="Message" ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
 		</div>
-		<div ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
+		<div id="threadView" ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
 			<div id="chatWindow">
 				<div ng-repeat="item in data">
 					<div>
@@ -71,7 +72,7 @@
 				</div>
 				<a id="chatBottom"></a>
 			</div>
-			<input class="form-control textBox" placeholder="Message" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
+			<input class="form-control textBox" id="mainSendBox" placeholder="Message" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
 		</div>
 	</div>
 
