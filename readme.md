@@ -7,4 +7,4 @@ Send Instagram DMs from your pc!
 - You're ready to go
 
 ##Changing the logged in user
-Simply type '''npm run login'''
+Simply type ```npm run login```
