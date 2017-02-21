@@ -4,7 +4,8 @@ var app = angular.module("pcdm",[]);
 app.service("thread",function($rootScope){
 	this.data = {
 		id: "340282366841710300949128113874027408665",
-		mode: "thread"
+		mode: "thread",
+		firstView: true
 	};
 	this.reload = function(x) {
 		console.log("Reload timer starting");
@@ -108,6 +109,7 @@ app.controller("threadsList",function($scope,$http,thread,$rootScope){
 	$scope.selectThread = function(id) {
 		thread.data.mode = "thread";
 		thread.data.id = id;
+		thread.data.firstView = true;
 		$rootScope.$emit("resetPolling");
 		console.log("Picked new thread");
 		$rootScope.showButton = true;
@@ -155,10 +157,12 @@ app.controller("threadView",function($scope,$http,thread,$rootScope,$anchorScrol
 			console.log("Auto refreshed after "+ pollingTime);
 			pollingTime += 2000;
 			timerID = setTimeout(fetchThread,pollingTime);
-
-			setTimeout(function(){
-				document.getElementById("chatWindow").scrollTop = document.getElementById("chatWindow").scrollHeight
-			},1);
+			if (thread.data.firstView) {
+				setTimeout(function(){
+					document.getElementById("chatWindow").scrollTop = document.getElementById("chatWindow").scrollHeight
+				},1);
+				thread.data.firstView = false;
+			}
 		});
 	};
 

@@ -31,7 +31,7 @@
 			<h2>New message</h2>
 			<br>
 			<h4>Add users</h4>
-			<input placeholder="User" class="form-control" ng-model="pattern" ng-change="update()"/>
+			<input placeholder="User" class="form-control textBox" ng-model="pattern" ng-change="update()"/>
 			<div ng-repeat="friend in data.matches">
 
 				<div class="account" data-id="{{friend.id}}" ng-click="selectUser(friend)">
