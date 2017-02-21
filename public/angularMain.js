@@ -24,9 +24,10 @@ app.service("friends",function($rootScope,$http){
 	});
 
 });
-app.controller("new",function($scope,thread) {
+app.controller("new",function($scope,thread,$rootScope) {
 	$scope.triggerNew = function() {
 		thread.data.mode = "new";
+		$rootScope.showButton = false;
 	}
 });
 app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
@@ -35,6 +36,7 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 	$scope.data.selected = [];
 	$scope.thread = thread;
 	$scope.cancel = function(){
+		$rootScope.showButton = true;
 		thread.data.mode = 'thread'
 		$scope.data.selected = [];
 		$scope.pattern = "";
@@ -71,6 +73,7 @@ app.controller("newThread",function($scope,$rootScope,friends,thread,$http){
 	};
 	$scope.send = function() {
 		$rootScope.$emit("resetPolling");
+		$rootScope.showButton = true;
 		var ids = [];
 		for (i in $scope.data.selected) {
 			ids.push($scope.data.selected[i].id);
@@ -102,13 +105,12 @@ app.controller("friendsList",function($scope,$rootScope,friends){
 
 app.controller("threadsList",function($scope,$http,thread,$rootScope){
 	$scope.data = [];
-
 	$scope.selectThread = function(id) {
 		thread.data.mode = "thread";
 		thread.data.id = id;
 		$rootScope.$emit("resetPolling");
 		console.log("Picked new thread");
-
+		$rootScope.showButton = true;
 		$rootScope.$emit("changeThread");
 
 	};

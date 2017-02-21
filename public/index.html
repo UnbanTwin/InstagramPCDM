@@ -2,6 +2,9 @@
 <html ng-app="pcdm">
 <head>
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="jqueryScripts.js"></script>
 	<script src="angular.min.js"></script>
 	<script src="angularMain.js"></script>
 	<title>Instagram PCDM</title>
@@ -9,12 +12,11 @@
 <body>
 	<div id="left">
 		<div ng-controller="new">
-			<button ng-click="triggerNew()">New message!</button>
+			<button ng-click="triggerNew()" class="btn btn-info" ng-hide="showButton == false">New message!</button>
 		</div>
 		<br>
-		<p>Threads</p>
+		<h5>Threads</h5>
 		<div ng-controller="threadsList">
-
 			<div ng-repeat="thread in data">
 				<div class="thread-list-item" ng-click = "selectThread(thread.id)" data-id="{{thread.id}}">
 					<img src="{{thread.inviter._params.picture}}"/>
@@ -25,32 +27,34 @@
 	</div>
 	<div id="right">
 		<div ng-controller="newThread" ng-show="thread.data.mode == 'new'">
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 			<h2>New message</h2>
-			<button ng-click="cancel()">Cancel</button>
 			<br>
-			<input ng-model="pattern" ng-change="update()"/>
+			<h4>Add users</h4>
+			<input placeholder="User" class="form-control" ng-model="pattern" ng-change="update()"/>
 			<div ng-repeat="friend in data.matches">
 
 				<div class="account" data-id="{{friend.id}}" ng-click="selectUser(friend)">
-					<img src="{{friend.picture}}"/>
-					<span class="username">{{friend.username}}</span>
+					<img class="newMessagePic" src="{{friend.picture}}"/>
+					<span class="newMessageUsername">{{friend.username}}</span>
 				</div>
 
 			</div>
-			<h4>Current users</h4>
+			<h5>Current users</h5>
 			<br>
 			<div ng-repeat="friend in data.selected">
 
 				<div class="account" data-id="{{friend.id}}" ng-click="removeUser(friend)">
 
-					<img src="{{friend.picture}}"/>
-					<span class="username">{{friend.username}}</span>
+					<img class="newMessagePic" src="{{friend.picture}}"/>
+					<span class="newMessageUsername">{{friend.username}}</span>
 				</div>
 
 			</div>
-			<input ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
+			<br>
+			<input class="form-control textBox" placeholder="Message" ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
 		</div>
-		<div ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
+		<div id="threadView" ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
 			<div id="chatWindow">
 				<div ng-repeat="item in data">
 					<div>
@@ -68,7 +72,7 @@
 				</div>
 				<a id="chatBottom"></a>
 			</div>
-			<input ng-model="contents"/><button ng-click="send()">Submit!</button>
+			<input class="form-control textBox" id="mainSendBox" placeholder="Message" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
 		</div>
 	</div>
 

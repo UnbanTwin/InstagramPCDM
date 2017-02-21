@@ -1,9 +1,12 @@
 #Instagram PC direct messaging.
+Send Instagram DMs from your pc!
 
-#Routes: (to be implemented)
-- List of conversations
-- History of specific conversations
-- Send message to conversation
-- Start new conversation
-- List of contacts
-- Starting new conversation with multiple contacts
+##Get started
+- Clone this repo
+- Run ```npm run setup```
+- Run ```npm start```
+- You're ready to go
+
+
+##Changing the logged in user
+Simply type ```npm run login```
