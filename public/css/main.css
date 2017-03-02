@@ -1,10 +1,16 @@
 body {
 	font-family: "Arial", Gadget, sans-serif;
 	font-size: 14px !important;
-	padding-top: 1%;
-	padding-left: 1%;
-	padding-bottom: 1%;
-	padding-right: 1%;
+	padding-top: 1% !important;
+	padding-left: 1%!important;
+	padding-bottom: 1%!important;
+	padding-right: 1%!important;
+	padding:0px;
+	margin:0px;
+	height: 100%;
+}
+html {
+	height: 100%;
 }
 
 #left {
@@ -12,14 +18,47 @@ body {
 	float: left;
 }
 #right {
-	padding-left: 20px;
-	border-left: 1px solid #ddd;
+	height:100%;
 	margin-left:300px;
+
+
+}
+#threadView {
+	height:100%;
+}
+#rightInner {
+	height:100%;
+	display: table;
+	width:100%;
 }
 #chatWindow {
-	height:500px;
+	display:table-row;
+	height:100%;
+
+	width:100%;
+}
+#innerChatWindowWrapper {
+	position: relative;
+	height: 100%;
+	width:100%;
+}
+#innerChatWindow {
 	overflow: scroll;
 	overflow-x: hidden;
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	left:0px;
+	right:0px;
+}
+#mainSendBoxWrapper {
+	display:table-row;
+	height:150px;
+
+	width:100%;
+}
+#mainSendBox {
+	width:800px !important;
 }
 .newMessagePic {
 	width:30px;
@@ -36,9 +75,7 @@ body {
 	display:inline-block!important;
 	margin-right: 1% !important;
 }
-#mainSendBox {
-	width:800px !important;
-}
+
 
 
 .thread-list-item:hover {

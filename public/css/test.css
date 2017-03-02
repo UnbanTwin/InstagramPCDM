@@ -1,0 +1,48 @@
+#left {
+	width:300px;
+	float: left;
+	background-color: blue;
+}
+#right {
+	height:100%;
+	margin-left:300px;
+	background-color: pink;
+}
+#rightInner {
+	height:100%;
+	background-color: purple;
+	display: table;
+	width:100%;
+}
+#messageBox {
+	display:table-row;
+	height:150px;
+	background-color: red;
+	width:100%;
+}
+#conversation {
+	display:table-row;
+	height:100%;
+	background-color: yellow;
+	width:100%;
+
+}
+#scrollListWrapper {
+	position: relative;
+	height: 100%;
+	width:100%;
+}
+#scrollList {
+	overflow: scroll;
+	overflow-x: hidden;
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	left:0px;
+	right:0px;
+}
+body {
+	padding: 0px;
+	margin: 0px;
+	font-size: 20px;
+}

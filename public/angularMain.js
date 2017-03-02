@@ -159,7 +159,7 @@ app.controller("threadView",function($scope,$http,thread,$rootScope,$anchorScrol
 			timerID = setTimeout(fetchThread,pollingTime);
 			if (thread.data.firstView) {
 				setTimeout(function(){
-					document.getElementById("chatWindow").scrollTop = document.getElementById("chatWindow").scrollHeight
+					document.getElementById("innerChatWindow").scrollTop = document.getElementById("innerChatWindow").scrollHeight
 				},1);
 				thread.data.firstView = false;
 			}

@@ -55,24 +55,32 @@
 			<input class="form-control textBox" placeholder="Message" ng-model="contents"/><button ng-click="send()" class="btn btn-success">Send!</button>
 		</div>
 		<div id="threadView" ng-controller="threadView" ng-show="thread.data.mode == 'thread'">
-			<div id="chatWindow">
-				<div ng-repeat="item in data">
-					<div>
-						<div ng-if="item.type == 'divider'" class="divider">
-							<img src="{{item.account.picture}}" height="20px" width="20px"/> {{item.account.username}}
+			<div id="rightInner">
+				<div id="chatWindow">
+					<div id="innerChatWindowWrapper">
+						<div id="innerChatWindow">
+							<div ng-repeat="item in data">
+								<div>
+									<div ng-if="item.type == 'divider'" class="divider">
+										<img src="{{item.account.picture}}" height="20px" width="20px"/> {{item.account.username}}
+									</div>
+									<div ng-if="item.type =='media'">
+										<a href="{{item.media[0].url}}" target="_blank"><img  class="thread-image"  src="{{item.media[0].url}}"></a>
+									</div>
+									<div class="message" ng-if="item.type =='text'">
+										{{item.text}}
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<a id="chatBottom"></a>
 						</div>
-						<div ng-if="item.type =='media'">
-							<a href="{{item.media[0].url}}" target="_blank"><img  class="thread-image"  src="{{item.media[0].url}}"></a>
-						</div>
-						<div class="message" ng-if="item.type =='text'">
-							{{item.text}}
-						</div>
-						<div class="clear"></div>
 					</div>
 				</div>
-				<a id="chatBottom"></a>
+				<div id="mainSendBoxWrapper">
+					<input class="form-control textBox" id="mainSendBox" placeholder="Message" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
+				</div>
 			</div>
-			<input class="form-control textBox" id="mainSendBox" placeholder="Message" ng-model="contents"/><button class="btn btn-success" ng-click="send()">Submit!</button>
 		</div>
 	</div>
 
